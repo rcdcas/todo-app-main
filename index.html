@@ -16,8 +16,8 @@
       rel="stylesheet"
     />
     <title>Frontend Mentor | Todo app</title>
-    <link rel="stylesheet" href="./style.css" />
-    <script src="./active.js"></script>
+    <link rel="stylesheet" href="./src/style.css" />
+    <script src="./src/last.js" defer></script>
   </head>
   <body>
     <div class="bg-img"></div>
@@ -26,44 +26,26 @@
       <input class="input" type="text" placeholder="Create a new todo..." />
       <div class="todo">
         <div class="todo__active">
-          <div class="activity">
-            <div class="check"></div>
-            <div class="text">Job around the park</div>
-            <div class="exs">
-              <div class="bar1"></div>
-              <div class="bar3"></div>
-            </div>
-          </div>
-          <div class="activity">
-            <div class="check"></div>
-            <div class="text">Job around the park</div>
-            <div class="exs">
-              <div class="bar1"></div>
-              <div class="bar3"></div>
-            </div>
-          </div>
-          <div class="activity">
-            <div class="check"></div>
-            <div class="text">Job around the park</div>
-            <div class="exs">
-              <div class="bar1"></div>
-              <div class="bar3"></div>
-            </div>
-          </div>
-          <div class="activity">
-            <div class="check"></div>
-            <div class="text">Job around the park</div>
-            <div class="exs">
-              <div class="bar1"></div>
-              <div class="bar3"></div>
-            </div>
+          <div class="todo__hidden">There is no tasks, yet!</div>
+          <div class="todo__hidden todo__hidden-off">All done!!</div>
+          <div class="todo__hidden todo__hidden-off">
+            There is work to do!!!
           </div>
         </div>
         <div class="options">
-          <div class="items">5 items left</div>
-          <div class="select">All</div>
+          <div class="items"><span class="items--left"></span> items left</div>
+          <div class="select">
+            <div>All</div>
+            <div>Active</div>
+            <div>Completed</div>
+          </div>
           <div class="clear">Clear Completed</div>
         </div>
+      </div>
+      <div class="select__mobile">
+        <div>All</div>
+        <div>Active</div>
+        <div>Completed</div>
       </div>
     </div>
     <div class="bg-color"></div>
