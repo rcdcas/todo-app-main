@@ -32,54 +32,7 @@ function createItem(event) {
     // console.log(event);
 
     let checked = false;
-    const activity = document.createElement('div');
-    const check = document.createElement('div');
-    const checkBox = document.createElement('div');
-    const text = document.createElement('div');
-    const exs = document.createElement('div');
-    const bar1 = document.createElement('div');
-    const bar2 = document.createElement('div');
-
-    //////////////
-
-    activity.className = 'activity';
-    check.className = 'check';
-    checkBox.className = 'checkbox';
-    text.className = 'text';
-    exs.className = 'exs';
-    bar1.className = 'bar1';
-    bar2.className = 'bar3';
-
-    ///////////////
-
-    text.innerText = event.target.value.trim();
-
-    check.addEventListener('click', () => {
-      text.classList.toggle('text--done');
-      checkBox.classList.toggle('checkbox--hidden');
-      tasks.forEach((item) => {
-        if (item.text == text.innerText) {
-          item.check = !item.check;
-        }
-      });
-
-      console.log(tasks);
-    });
-
-    exs.addEventListener('click', () => {
-      activity.remove();
-      for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].text == text.innerText) {
-          tasks.splice(i, 1);
-        }
-      }
-      console.log(tasks);
-      all();
-    });
-
-    exs.append(bar1, bar2);
-    check.append(checkBox);
-    activity.append(check, text, exs);
+    let activity = createElementTodo(event.target.value);
     // todoActive.append(activity);
     const task = {
       // id: Math.random(),
@@ -94,6 +47,59 @@ function createItem(event) {
     all();
   }
 }
+
+function createElementTodo(textTodo) {
+  const activity = document.createElement('div');
+  const check = document.createElement('div');
+  const checkBox = document.createElement('div');
+  const text = document.createElement('div');
+  const exs = document.createElement('div');
+  const bar1 = document.createElement('div');
+  const bar2 = document.createElement('div');
+
+  //////////////
+
+  activity.className = 'activity';
+  check.className = 'check';
+  checkBox.className = 'checkbox';
+  text.className = 'text';
+  exs.className = 'exs';
+  bar1.className = 'bar1';
+  bar2.className = 'bar3';
+
+  ///////////////
+
+  text.innerText = textTodo.trim();
+
+  check.addEventListener('click', () => {
+    text.classList.toggle('text--done');
+    checkBox.classList.toggle('checkbox--hidden');
+    tasks.forEach((item) => {
+      if (item.text == text.innerText) {
+        item.check = !item.check;
+      }
+    });
+
+    console.log(tasks);
+  });
+
+  exs.addEventListener('click', () => {
+    activity.remove();
+    for (let i = 0; i < tasks.length; i++) {
+      if (tasks[i].text == text.innerText) {
+        tasks.splice(i, 1);
+      }
+    }
+    console.log(tasks);
+    all();
+  });
+
+  exs.append(bar1, bar2);
+  check.append(checkBox);
+  activity.append(check, text, exs);
+  return activity;
+}
+
 function hidingText() {
   todoHidden.forEach((value) => value.classList.add('todo__hidden-off'));
 }
@@ -148,6 +154,7 @@ function completed() {
 function active() {
   // Array temporal needed for render active tasks
   temporal = tasks.filter((value) => value.check == false);
+  // tasks.forEach();
   hidingText();
   thereIsTextToDo(1);
   removeUI();
