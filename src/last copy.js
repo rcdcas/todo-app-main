@@ -91,8 +91,7 @@ function createElementTodo(textTodo) {
       }
     }
     console.log(tasks);
-    // all();
-    updateLeftItems();
+    all();
   });
 
   exs.append(bar1, bar2);
@@ -107,6 +106,15 @@ function hidingText() {
 
 function updateLeftItems() {
   console.log(tasks.length);
+
+  // if (tasks.length > 0) {
+  //   todoHidden[0].classList.add('todo__hidden-off');
+  // } else {
+  //   todoHidden[0].classList.remove('todo__hidden-off');
+  // }
+
+  // Rendered items left
+
   itemsLeft.textContent = tasks.length.toString();
 }
 updateLeftItems();
@@ -119,7 +127,7 @@ function clearCompleted() {
       i--;
     }
   }
-  // all();
+  all();
 }
 
 function renderUI(parameter) {
