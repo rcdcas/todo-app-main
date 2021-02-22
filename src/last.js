@@ -10,7 +10,8 @@ const optionSelectPhone = document.querySelectorAll('.select__mobile div');
 const select = document.querySelector('.select');
 const optionSelect = document.querySelectorAll('.select div');
 const tasks = [];
-let temporal = [];
+let temporalAppend = [];
+let temporalRemove = [];
 
 function thereIsTextToDo(position) {
   // if (tasks.length > 0) {
@@ -26,7 +27,7 @@ function thereIsTextToDo(position) {
       todoHidden[0].classList.remove('todo__hidden-off');
     }
   } else {
-    if (tasks.length > 0 && temporal.length === 0) {
+    if (tasks.length > 0 && temporalAppend.length === 0) {
       todoHidden[position].classList.remove('todo__hidden-off');
     } else {
       todoHidden[position].classList.add('todo__hidden-off');
@@ -112,6 +113,13 @@ function clearCompleted() {
   // all();
 }
 
+function removeUI(parameter) {
+  parameter.forEach((value) => value.objectTask.remove());
+  console.log('dd');
+  // hidingText();
+  updateLeftItems();
+}
+
 function renderUI(parameter) {
   parameter.forEach((value) => todoActive.append(value.objectTask));
   console.log('dd');
@@ -125,22 +133,27 @@ function renderUI(parameter) {
 // }
 
 function completed() {
-  // Array temporal needed for render completed tasks
-  temporal = tasks.filter((value) => value.check === true);
+  // Array temporalAppend needed for render completed tasks
+  temporalAppend = tasks.filter((value) => value.check === true);
+  temporalRemove = tasks.filter((value) => value.check === false);
+
   hidingText();
   thereIsTextToDo(2);
   // removeUI();
-  renderUI(temporal);
+  removeUI(temporalRemove);
+  renderUI(temporalAppend);
 }
 
 function active() {
-  // Array temporal needed for render active tasks
-  temporal = tasks.filter((value) => value.check === false);
+  // Array temporalAppend needed for render active tasks
+  temporalAppend = tasks.filter((value) => value.check === false);
+  temporalRemove = tasks.filter((value) => value.check === true);
   // tasks.forEach();
   hidingText();
   thereIsTextToDo(1);
   // removeUI();
-  renderUI(temporal);
+  removeUI(temporalRemove);
+  renderUI(temporalAppend);
 }
 
 function all() {
