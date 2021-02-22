@@ -1,4 +1,5 @@
 'use strict';
+
 const input = document.querySelector('input');
 const todoActive = document.querySelector('.todo__active');
 const todoHidden = document.querySelectorAll('.todo__hidden');
@@ -11,42 +12,35 @@ const optionSelect = document.querySelectorAll('.select div');
 const tasks = [];
 let temporal = [];
 
-select.addEventListener('click', activeBtn);
-optionSelect[0].addEventListener('click', all);
-optionSelect[1].addEventListener('click', active);
-optionSelect[2].addEventListener('click', completed);
-selectPhone.addEventListener('click', activeBtn);
-optionSelectPhone[0].addEventListener('click', all);
-optionSelectPhone[1].addEventListener('click', active);
-optionSelectPhone[2].addEventListener('click', completed);
-input.addEventListener('keypress', createItem);
-clearBtn.addEventListener('click', clearCompleted);
-
-function createItem(event) {
-  for (let i = 0; i < tasks.length; i++) {
-    if (event.target.value == tasks[i].text) {
-      return;
+function thereIsTextToDo(position) {
+  // if (tasks.length > 0) {
+  //   todoHidden[0].classList.add('todo__hidden-off');
+  // } else {
+  //   todoHidden[0].classList.remove('todo__hidden-off');
+  // }
+  if (position === 0) {
+    if (tasks.length > 0) {
+      console.log(tasks.length, 'thereIsTextToDo');
+      todoHidden[0].classList.add('todo__hidden-off');
+    } else {
+      todoHidden[0].classList.remove('todo__hidden-off');
+    }
+  } else {
+    if (tasks.length > 0 && temporal.length === 0) {
+      todoHidden[position].classList.remove('todo__hidden-off');
+    } else {
+      todoHidden[position].classList.add('todo__hidden-off');
     }
   }
-  if (event.key === 'Enter' && event.target.value != '') {
-    // console.log(event);
-
-    let checked = false;
-    let activity = createElementTodo(event.target.value);
-    // todoActive.append(activity);
-    const task = {
-      // id: Math.random(),
-      check: checked,
-      text: event.target.value.trim(),
-      objectTask: activity,
-    };
-    tasks.push(task);
-    console.log(tasks);
-    // updateLeftItems();
-    input.value = '';
-    all();
-  }
 }
+
+function updateLeftItems() {
+  console.log(tasks.length);
+  thereIsTextToDo(0);
+
+  itemsLeft.textContent = tasks.length.toString();
+}
+updateLeftItems();
 
 function createElementTodo(textTodo) {
   const activity = document.createElement('div');
@@ -57,7 +51,7 @@ function createElementTodo(textTodo) {
   const bar1 = document.createElement('div');
   const bar2 = document.createElement('div');
 
-  //////////////
+  /// ///////////
 
   activity.className = 'activity';
   check.className = 'check';
@@ -67,7 +61,7 @@ function createElementTodo(textTodo) {
   bar1.className = 'bar1';
   bar2.className = 'bar3';
 
-  ///////////////
+  /// ////////////
 
   text.innerText = textTodo.trim();
 
@@ -75,7 +69,7 @@ function createElementTodo(textTodo) {
     text.classList.toggle('text--done');
     checkBox.classList.toggle('checkbox--hidden');
     tasks.forEach((item) => {
-      if (item.text == text.innerText) {
+      if (item.text === text.innerText) {
         item.check = !item.check;
       }
     });
@@ -85,8 +79,8 @@ function createElementTodo(textTodo) {
 
   exs.addEventListener('click', () => {
     activity.remove();
-    for (let i = 0; i < tasks.length; i++) {
-      if (tasks[i].text == text.innerText) {
+    for (let i = 0; i < tasks.length; i += 1) {
+      if (tasks[i].text === text.innerText) {
         tasks.splice(i, 1);
       }
     }
@@ -105,20 +99,16 @@ function hidingText() {
   todoHidden.forEach((value) => value.classList.add('todo__hidden-off'));
 }
 
-function updateLeftItems() {
-  console.log(tasks.length);
-  itemsLeft.textContent = tasks.length.toString();
-}
-updateLeftItems();
-
 function clearCompleted() {
-  for (let i = 0; i < tasks.length; i++) {
-    if (tasks[i].check == true) {
+  for (let i = 0; i < tasks.length; i += 1) {
+    if (tasks[i].check === true) {
       tasks[i].objectTask.remove();
       tasks.splice(i, 1);
-      i--;
+      i -= 1;
     }
   }
+  updateLeftItems();
+
   // all();
 }
 
@@ -129,56 +119,35 @@ function renderUI(parameter) {
   updateLeftItems();
 }
 
-function removeUI() {
-  // needed for render options tasks
-  tasks.forEach((value) => value.objectTask.remove());
-}
+// function removeUI() {
+//   // needed for render options tasks
+//   tasks.forEach((value) => value.objectTask.remove());
+// }
 
 function completed() {
   // Array temporal needed for render completed tasks
-  temporal = tasks.filter((value) => value.check == true);
+  temporal = tasks.filter((value) => value.check === true);
   hidingText();
   thereIsTextToDo(2);
-  removeUI();
+  // removeUI();
   renderUI(temporal);
 }
 
 function active() {
   // Array temporal needed for render active tasks
-  temporal = tasks.filter((value) => value.check == false);
+  temporal = tasks.filter((value) => value.check === false);
   // tasks.forEach();
   hidingText();
   thereIsTextToDo(1);
-  removeUI();
+  // removeUI();
   renderUI(temporal);
 }
 
 function all() {
   hidingText();
   thereIsTextToDo(0);
-  removeUI();
+  // removeUI();
   renderUI(tasks);
-}
-
-function thereIsTextToDo(position) {
-  if (tasks.length > 0) {
-    todoHidden[0].classList.add('todo__hidden-off');
-  } else {
-    todoHidden[0].classList.remove('todo__hidden-off');
-  }
-  if (position == 0) {
-    if (tasks.length > 0) {
-      todoHidden[0].classList.add('todo__hidden-off');
-    } else {
-      todoHidden[0].classList.remove('todo__hidden-off');
-    }
-  } else {
-    if (tasks.length > 0 && temporal.length == 0) {
-      todoHidden[position].classList.remove('todo__hidden-off');
-    } else {
-      todoHidden[position].classList.add('todo__hidden-off');
-    }
-  }
 }
 
 function activeBtn(event) {
@@ -188,6 +157,44 @@ function activeBtn(event) {
     event.target.classList.add('active--btn');
   }
 }
+
+function createItem(event) {
+  for (let i = 0; i < tasks.length; i += 1) {
+    if (event.target.value === tasks[i].text) {
+      return;
+    }
+  }
+  if (event.key === 'Enter' && event.target.value !== '') {
+    // console.log(event);
+
+    let checked = false;
+    const activity = createElementTodo(event.target.value);
+    const task = {
+      // id: Math.random(),
+      check: checked,
+      text: event.target.value.trim(),
+      objectTask: activity,
+    };
+    tasks.push(task);
+    console.log(tasks);
+    updateLeftItems();
+    input.value = '';
+    todoActive.append(activity);
+
+    // all();
+  }
+}
+
+select.addEventListener('click', activeBtn);
+optionSelect[0].addEventListener('click', all);
+optionSelect[1].addEventListener('click', active);
+optionSelect[2].addEventListener('click', completed);
+selectPhone.addEventListener('click', activeBtn);
+optionSelectPhone[0].addEventListener('click', all);
+optionSelectPhone[1].addEventListener('click', active);
+optionSelectPhone[2].addEventListener('click', completed);
+input.addEventListener('keypress', createItem);
+clearBtn.addEventListener('click', clearCompleted);
 
 // if (tasks.length > 0) {
 //   todoHidden[0].classList.add('todo__hidden-off');
