@@ -87,6 +87,7 @@ function createElementTodo(textTodo) {
     }
     console.log(tasks);
     // all();
+    // thereIsTextToDo();
     updateLeftItems();
   });
 
@@ -183,7 +184,6 @@ function createItem(event) {
     let checked = false;
     const activity = createElementTodo(event.target.value);
     const task = {
-      // id: Math.random(),
       check: checked,
       text: event.target.value.trim(),
       objectTask: activity,
@@ -193,8 +193,6 @@ function createItem(event) {
     updateLeftItems();
     input.value = '';
     todoActive.append(activity);
-
-    // all();
   }
 }
 
@@ -214,3 +212,4 @@ clearBtn.addEventListener('click', clearCompleted);
 // } else {
 //   todoHidden[0].classList.remove('todo__hidden-off');
 // }
+
